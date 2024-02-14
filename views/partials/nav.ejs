@@ -1,0 +1,15 @@
+<nav class="nav">
+    <div class="nav_logo">
+        <a href="/">BLOG</a>
+        <p>Home of verifiable information...</p>
+    </div>
+    <div class="nav_links">
+        <% if(user) { %>
+        <a href="/blogs/create">NEW BLOG</a>
+        <a href="/logout">Logout</a>
+        <% } else { %>
+        <a href="/">HOME</a>
+        <a href="/about">ABOUT</a>
+        <% } %
+    </div>
+</nav>

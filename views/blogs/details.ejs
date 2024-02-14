@@ -1,0 +1,46 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        <%- include('../partials/nav.ejs') %>
+        <hr />
+        <h2>BLOG DETAILS</h2>
+        <div class="blog_details_box">
+            <div>
+                <h4>TITLE: <%= blog.title %></h4>
+                <h4>CONTENT</h4>
+                <p><%= blog.body %></p>
+                <h4>AUTHOR: <%= blog.title %></h4>
+            </div>
+
+            <button class="delete_btn" data-delete="<%=blog._id%>">
+                DELETE
+            </button>
+        </div>
+
+        <%- include('../partials/footer.ejs') %>
+
+        <script>
+            const deleteBtn = document.querySelector('.delete_btn')
+
+            // handle delete blog func
+            const handleDeleteBlog = () => {
+                const endpoint = `/blogs/${deleteBtn.dataset.delete}`
+
+                try {
+                    // use fetch api
+                    fetch(endpoint, {
+                        method: 'DELETE',
+                    })
+                        .then((response) => response.json())
+                        .then((data) => (window.location.href = data.redirect))
+                        .catch((err) => console.log(err))
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+
+            // attach a click event listener
+            deleteBtn.addEventListener('click', handleDeleteBlog)
+        </script>
+    </body>
+</html>

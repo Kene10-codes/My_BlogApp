@@ -1,0 +1,68 @@
+<html lang="en">
+    <%- include('../partials/head.ejs') %>
+    <body>
+        <%- include('../partials/nav.ejs') %>
+        <hr />
+        <h2>CREATE NEW BLOG</h2>
+        <form class="form">
+            <div class="input_box">
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" />
+                <div class="title error"></div>
+            </div>
+            <div class="input_box">
+                <label for="body">Body:</label>
+                <textarea
+                    rows="15"
+                    cols="38"
+                    name="body"
+                    id="body"
+                    placeholder="comment here.."
+                ></textarea>
+                <div class="title body"></div>
+            </div>
+            <div class="input_box">
+                <label for="author">Author:</label>
+                <input type="text" name="author" id="author" />
+                <div class="title author"></div>
+            </div>
+
+            <button class="submit_btn">Submit</button>
+        </form>
+        <%- include('../partials/footer.ejs') %>
+
+        <script>
+            const form = document.querySelector('form')
+
+            const submitBtn = document.querySelector('.submit_btn')
+            const titleError = document.querySelector('.title')
+            const bodyError = document.querySelector('.body')
+            const authorError = document.querySelector('.author')
+
+            const handleFormSubmit = async () => {
+                const title = form.title.value
+                const body = form.body.value
+                const author = form.author.value
+
+                // reset the form
+                titleError.textContent = ''
+                bodyError.textContent = ''
+                authorError.textContent = ''
+
+                // invoke submit API
+                try {
+                    const response = await fetch('/blogs/add-blog', {
+                        method: 'POST',
+                        body: JSON.stringify({ title, body, author }),
+                        headers: { 'Content-Type': 'Application/json' },
+                    })
+                    const data = await response.json()
+                    console.log(data)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+            submitBtn.addEventListener('click', handleFormSubmit)
+        </script>
+    </body>
+</html>
